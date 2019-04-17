@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.VideoView;
 
-import pivx.org.pivxwallet.PivxApplication;
+import pivx.org.pivxwallet.ElectraApplication;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.start_activity.StartActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
@@ -28,7 +28,7 @@ public class SplashActivity extends AppCompatActivity {
 
         videoView = (VideoView) findViewById(R.id.video_view);
         Uri video;
-        if(PivxApplication.getInstance().getAppConf().isSplashSoundEnabled())
+        if(ElectraApplication.getInstance().getAppConf().isSplashSoundEnabled())
             video = Uri.parse("android.resource://" + getPackageName() + "/"
                 + R.raw.splash_video);
         else {
@@ -67,7 +67,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void jump() {
 
-        if (PivxApplication.getInstance().getAppConf().isAppInit()){
+        if (ElectraApplication.getInstance().getAppConf().isAppInit()){
             Intent intent = new Intent(this, WalletActivity.class);
             startActivity(intent);
         }else {

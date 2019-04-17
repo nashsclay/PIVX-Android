@@ -26,9 +26,9 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 
-import global.PivxModuleImp;
+import global.ElectraModuleImp;
 import global.utils.Io;
-import pivx.org.pivxwallet.PivxApplication;
+import pivx.org.pivxwallet.ElectraApplication;
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.utils.CrashReporter;
 
@@ -54,11 +54,11 @@ public class CrashPopupActivity extends AppCompatActivity implements View.OnClic
     private TextView txt_send;
     private TextView txt_cancel;
 
-    private PivxApplication pivxApplication;
+    private ElectraApplication pivxApplication;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        pivxApplication = PivxApplication.getInstance();
+        pivxApplication = ElectraApplication.getInstance();
         setTheme(R.style.AppTheme_Dialog);
         setContentView(R.layout.report_issue_activity_dialog);
         this.setFinishOnTouchOutside(false);
@@ -249,6 +249,6 @@ public class CrashPopupActivity extends AppCompatActivity implements View.OnClic
 
     @Nullable
     protected CharSequence collectWalletDump() throws IOException{
-        return ((PivxModuleImp)pivxApplication.getModule()).getWallet().toString(false,true,true,null);
+        return ((ElectraModuleImp)pivxApplication.getModule()).getWallet().toString(false,true,true,null);
     }
 }

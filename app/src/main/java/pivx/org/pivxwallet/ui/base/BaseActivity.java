@@ -17,7 +17,7 @@ import pivx.org.pivxwallet.R;
  * Created by mati on 18/04/17.
  */
 
-public abstract class BaseActivity extends PivxActivity {
+public abstract class BaseActivity extends ElectraActivity {
 
     protected Toolbar toolbar;
     protected FrameLayout childContainer;

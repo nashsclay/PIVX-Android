@@ -20,10 +20,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import chain.BlockchainState;
-import global.PivxModuleImp;
+import global.ElectraModuleImp;
 import pivx.org.pivxwallet.BuildConfig;
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.module.PivxContext;
+import pivx.org.pivxwallet.module.ElectraContext;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
 import pivx.org.pivxwallet.ui.export_account.ExportKeyActivity;
@@ -77,7 +77,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
         txt_network_info = (TextView) findViewById(R.id.txt_network_info);
 
         textAbout = (TextView)findViewById(R.id.text_about);
-        String text = "Made by<br> <font color=#55476c>Furszy</font> <br>(c) PIVX Community";
+        String text = "Made by<br> <font color=#55476c>Furszy</font> <br>(c) ECA Community";
         textAbout.setText(Html.fromHtml(text));
         // Open Backup Wallet
         buttonBackup = (Button) findViewById(R.id.btn_backup_wallet);
@@ -231,7 +231,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
             @Nullable
             @Override
             protected CharSequence subject() {
-                return PivxContext.REPORT_SUBJECT_ISSUE+" "+pivxApplication.getVersionName();
+                return ElectraContext.REPORT_SUBJECT_ISSUE+" "+pivxApplication.getVersionName();
             }
 
             @Nullable
@@ -259,7 +259,7 @@ public class SettingsActivity extends BaseDrawerActivity implements View.OnClick
             @Nullable
             @Override
             protected CharSequence collectWalletDump() throws IOException {
-                return ((PivxModuleImp)pivxModule).getWallet().toString(false,true,true,null);
+                return ((ElectraModuleImp)pivxModule).getWallet().toString(false,true,true,null);
             }
         };
         dialog.show();

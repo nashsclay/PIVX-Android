@@ -19,7 +19,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import pivx.org.pivxwallet.R;
-import global.PivxRate;
+import global.ElectraRate;
 import pivx.org.pivxwallet.ui.base.BaseRecyclerFragment;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerAdapter;
 import pivx.org.pivxwallet.ui.base.tools.adapter.BaseRecyclerViewHolder;
@@ -39,7 +39,7 @@ public class TransactionsFragmentBase extends BaseRecyclerFragment<TransactionWr
 
     private static final Logger logger = LoggerFactory.getLogger(TransactionsFragmentBase.class);
 
-    private PivxRate pivxRate;
+    private ElectraRate pivxRate;
     private MonetaryFormat coinFormat = MonetaryFormat.BTC;
     private int scale = 3;
 

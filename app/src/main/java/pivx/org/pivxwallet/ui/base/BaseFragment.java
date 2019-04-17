@@ -6,8 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 
-import pivx.org.pivxwallet.PivxApplication;
-import global.PivxModule;
+import pivx.org.pivxwallet.ElectraApplication;
+import global.ElectraModule;
 
 /**
  * Created by furszy on 6/29/17.
@@ -15,13 +15,13 @@ import global.PivxModule;
 
 public class BaseFragment extends Fragment {
 
-    protected PivxApplication pivxApplication;
-    protected PivxModule pivxModule;
+    protected ElectraApplication pivxApplication;
+    protected ElectraModule pivxModule;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pivxApplication = PivxApplication.getInstance();
+        pivxApplication = ElectraApplication.getInstance();
         pivxModule = pivxApplication.getModule();
     }
 

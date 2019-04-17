@@ -47,19 +47,19 @@ import chain.BlockchainManager;
 import chain.BlockchainState;
 import chain.Impediment;
 import pivtrum.listeners.AddressListener;
-import pivx.org.pivxwallet.PivxApplication;
+import pivx.org.pivxwallet.ElectraApplication;
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.module.PivxContext;
-import global.PivxModuleImp;
+import pivx.org.pivxwallet.module.ElectraContext;
+import global.ElectraModuleImp;
 import pivx.org.pivxwallet.module.store.SnappyBlockchainStore;
 import pivx.org.pivxwallet.rate.CoinMarketCapApiClient;
-import pivx.org.pivxwallet.rate.RequestPivxRateException;
-import global.PivxRate;
+import pivx.org.pivxwallet.rate.RequestElectraRateException;
+import global.ElectraRate;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 import pivx.org.pivxwallet.utils.AppConf;
 import pivx.org.pivxwallet.utils.CrashReporter;
 
-import static pivx.org.pivxwallet.module.PivxContext.CONTEXT;
+import static pivx.org.pivxwallet.module.ElectraContext.CONTEXT;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_ADDRESS_BALANCE_CHANGE;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_BROADCAST_TRANSACTION;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_CANCEL_COINS_RECEIVED;
@@ -79,12 +79,12 @@ import static pivx.org.pivxwallet.service.IntentsConstants.NOT_COINS_RECEIVED;
  * Created by furszy on 6/12/17.
  */
 
-public class PivxWalletService extends Service{
+public class ElectraWalletService extends Service{
 
-    private Logger log = LoggerFactory.getLogger(PivxWalletService.class);
+    private Logger log = LoggerFactory.getLogger(ElectraWalletService.class);
 
-    private PivxApplication pivxApplication;
-    private PivxModuleImp module;
+    private ElectraApplication pivxApplication;
+    private ElectraModuleImp module;
     //private PivtrumPeergroup pivtrumPeergroup;
     private BlockchainManager blockchainManager;
 
@@ -108,16 +108,16 @@ public class PivxWalletService extends Service{
     private volatile long lastUpdateTime = System.currentTimeMillis();
     private volatile long lastMessageTime = System.currentTimeMillis();
 
-    public class PivxBinder extends Binder {
-        public PivxWalletService getService() {
-            return PivxWalletService.this;
+    public class ElectraBinder extends Binder {
+        public ElectraWalletService getService() {
+            return ElectraWalletService.this;
         }
     }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return new PivxBinder();
+        return new ElectraBinder();
     }
 
     private AddressListener addressListener = new AddressListener() {
@@ -155,7 +155,7 @@ public class PivxWalletService extends Service{
             log.info("Peer: " + peer + ", Block: " + block + ", left: " + blocksLeft);*/
 
 
-            /*if (PivxContext.IS_TEST)
+            /*if (ElectraContext.IS_TEST)
                 showBlockchainSyncNotification(blocksLeft);*/
 
                 //delayHandler.removeCallbacksAndMessages(null);
@@ -188,7 +188,7 @@ public class PivxWalletService extends Service{
 
         @Override
         public void run() {
-            org.pivxj.core.Context.propagate(PivxContext.CONTEXT);
+            org.pivxj.core.Context.propagate(ElectraContext.CONTEXT);
             lastMessageTime = System.currentTimeMillis();
             broadcastBlockchainState(false);
         }
@@ -258,9 +258,9 @@ public class PivxWalletService extends Service{
                     notificationAccumulatedAmount = notificationAccumulatedAmount.add(amount);
                     Intent openIntent = new Intent(getApplicationContext(), WalletActivity.class);
                     openPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, openIntent, 0);
-                    Intent resultIntent = new Intent(getApplicationContext(), PivxWalletService.this.getClass());
+                    Intent resultIntent = new Intent(getApplicationContext(), ElectraWalletService.this.getClass());
                     resultIntent.setAction(ACTION_CANCEL_COINS_RECEIVED);
-                    deleteIntent = PendingIntent.getService(PivxWalletService.this, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+                    deleteIntent = PendingIntent.getService(ElectraWalletService.this, 0, resultIntent, PendingIntent.FLAG_CANCEL_CURRENT);
                     mBuilder = new NotificationCompat.Builder(getApplicationContext())
                             .setContentTitle("Pivs received!")
                             .setContentText("Coins received for a value of " + notificationAccumulatedAmount.toFriendlyString())
@@ -270,7 +270,7 @@ public class PivxWalletService extends Service{
                                     (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ?
                                             getResources().getColor(R.color.bgPurple, null)
                                             :
-                                            ContextCompat.getColor(PivxWalletService.this, R.color.bgPurple))
+                                            ContextCompat.getColor(ElectraWalletService.this, R.color.bgPurple))
                             .setDeleteIntent(deleteIntent)
                             .setContentIntent(openPendingIntent);
                     nm.notify(NOT_COINS_RECEIVED, mBuilder.build());
@@ -313,16 +313,16 @@ public class PivxWalletService extends Service{
         serviceCreatedAt = System.currentTimeMillis();
         super.onCreate();
         try {
-            log.info("Pivx service started");
+            log.info("Electra service started");
             // Android stuff
             final String lockName = getPackageName() + " blockchain sync";
             final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
             wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, lockName);
             nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             broadcastManager = LocalBroadcastManager.getInstance(this);
-            // Pivx
-            pivxApplication = PivxApplication.getInstance();
-            module = (PivxModuleImp) pivxApplication.getModule();
+            // Electra
+            pivxApplication = ElectraApplication.getInstance();
+            module = (ElectraModuleImp) pivxApplication.getModule();
             blockchainManager = module.getBlockchainManager();
             // connect to pivtrum node
             /*pivtrumPeergroup = new PivtrumPeergroup(pivxApplication.getNetworkConf());
@@ -335,9 +335,9 @@ public class PivxWalletService extends Service{
             peerConnectivityListener = new PeerConnectivityListener();
 
             File file = getDir("blockstore_v2",MODE_PRIVATE);
-            String filename = PivxContext.Files.BLOCKCHAIN_FILENAME;
+            String filename = ElectraContext.Files.BLOCKCHAIN_FILENAME;
             boolean fileExists = new File(file,filename).exists();
-            blockchainStore = new SnappyBlockchainStore(PivxContext.CONTEXT,file,filename);
+            blockchainStore = new SnappyBlockchainStore(ElectraContext.CONTEXT,file,filename);
             blockchainManager.init(
                     blockchainStore,
                     file,
@@ -376,7 +376,7 @@ public class PivxWalletService extends Service{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        log.info("Pivx service onStartCommand");
+        log.info("Electra service onStartCommand");
         try {
             if (intent != null) {
                 try {
@@ -459,7 +459,7 @@ public class PivxWalletService extends Service{
             AlarmManager alarm = (AlarmManager)getSystemService(ALARM_SERVICE);
             long scheduleTime = System.currentTimeMillis() + 2000*60;//(1000 * 60 * 60); // One hour from now
 
-            Intent intent = new Intent(this, PivxWalletService.class);
+            Intent intent = new Intent(this, ElectraWalletService.class);
             intent.setAction(ACTION_SCHEDULE_SERVICE);
             alarm.set(
                     // This alarm will wake up the device when System.currentTimeMillis()
@@ -482,33 +482,33 @@ public class PivxWalletService extends Service{
 
     private void requestRateCoin(){
         final AppConf appConf = pivxApplication.getAppConf();
-        PivxRate pivxRate = module.getRate(appConf.getSelectedRateCoin());
-        if (pivxRate == null || pivxRate.getTimestamp() + PivxContext.RATE_UPDATE_TIME < System.currentTimeMillis()){
+        ElectraRate pivxRate = module.getRate(appConf.getSelectedRateCoin());
+        if (pivxRate == null || pivxRate.getTimestamp() + ElectraContext.RATE_UPDATE_TIME < System.currentTimeMillis()){
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         CoinMarketCapApiClient c = new CoinMarketCapApiClient();
-                        CoinMarketCapApiClient.PivxMarket pivxMarket = c.getPivxPxrice();
-                        PivxRate pivxRate = new PivxRate("USD",pivxMarket.priceUsd,System.currentTimeMillis());
+                        CoinMarketCapApiClient.ElectraMarket pivxMarket = c.getElectraPxrice();
+                        ElectraRate pivxRate = new ElectraRate("USD",pivxMarket.priceUsd,System.currentTimeMillis());
                         module.saveRate(pivxRate);
-                        final PivxRate pivxBtcRate = new PivxRate("BTC",pivxMarket.priceBtc,System.currentTimeMillis());
+                        final ElectraRate pivxBtcRate = new ElectraRate("BTC",pivxMarket.priceBtc,System.currentTimeMillis());
                         module.saveRate(pivxBtcRate);
 
                         // Get the rest of the rates:
-                        List<PivxRate> rates = new CoinMarketCapApiClient.BitPayApi().getRates(new CoinMarketCapApiClient.BitPayApi.RatesConvertor<PivxRate>() {
+                        List<ElectraRate> rates = new CoinMarketCapApiClient.BitPayApi().getRates(new CoinMarketCapApiClient.BitPayApi.RatesConvertor<ElectraRate>() {
                             @Override
-                            public PivxRate convertRate(String code, String name, BigDecimal bitcoinRate) {
+                            public ElectraRate convertRate(String code, String name, BigDecimal bitcoinRate) {
                                 BigDecimal rate = bitcoinRate.multiply(pivxBtcRate.getRate());
-                                return new PivxRate(code,rate,System.currentTimeMillis());
+                                return new ElectraRate(code,rate,System.currentTimeMillis());
                             }
                         });
 
-                        for (PivxRate rate : rates) {
+                        for (ElectraRate rate : rates) {
                             module.saveRate(rate);
                         }
 
-                    } catch (RequestPivxRateException e) {
+                    } catch (RequestElectraRateException e) {
                         e.printStackTrace();
                     } catch (Exception e){
                         e.printStackTrace();
@@ -574,7 +574,7 @@ public class PivxWalletService extends Service{
                                         (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) ?
                                                 getResources().getColor(R.color.bgPurple,null)
                                                 :
-                                                ContextCompat.getColor(PivxWalletService.this,R.color.bgPurple))
+                                                ContextCompat.getColor(ElectraWalletService.this,R.color.bgPurple))
                         ;
 
                 nm.notify(NOT_BLOCKCHAIN_ALERT, mBuilder.build());

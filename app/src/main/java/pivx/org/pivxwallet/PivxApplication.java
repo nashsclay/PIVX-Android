@@ -37,13 +37,13 @@ import global.utils.Io;
 import pivtrum.NetworkConf;
 import pivtrum.PivtrumPeerData;
 import pivx.org.pivxwallet.contacts.ContactsStore;
-import pivx.org.pivxwallet.module.PivxContext;
+import pivx.org.pivxwallet.module.ElectraContext;
 import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
-import global.PivxModule;
-import global.PivxModuleImp;
+import global.ElectraModule;
+import global.ElectraModuleImp;
 import pivx.org.pivxwallet.module.WalletConfImp;
 import pivx.org.pivxwallet.rate.db.RateDb;
-import pivx.org.pivxwallet.service.PivxWalletService;
+import pivx.org.pivxwallet.service.ElectraWalletService;
 import pivx.org.pivxwallet.utils.AppConf;
 import pivx.org.pivxwallet.utils.CentralFormats;
 import pivx.org.pivxwallet.utils.CrashReporter;
@@ -55,19 +55,19 @@ import static pivx.org.pivxwallet.utils.AndroidUtils.shareText;
  * Created by mati on 18/04/17.
  */
 @ReportsCrashes(
-        mailTo = PivxContext.REPORT_EMAIL, // my email here
+        mailTo = ElectraContext.REPORT_EMAIL, // my email here
         mode = ReportingInteractionMode.TOAST,
         resToastText = R.string.crash_toast_text)
-public class PivxApplication extends Application implements ContextWrapper {
+public class ElectraApplication extends Application implements ContextWrapper {
 
     private static Logger log;
 
     /** Singleton */
-    private static PivxApplication instance;
+    private static ElectraApplication instance;
     public static final long TIME_CREATE_APPLICATION = System.currentTimeMillis();
     private long lastTimeRequestBackup;
 
-    private PivxModule pivxModule;
+    private ElectraModule pivxModule;
     private AppConf appConf;
     private NetworkConf networkConf;
 
@@ -76,7 +76,7 @@ public class PivxApplication extends Application implements ContextWrapper {
     private ActivityManager activityManager;
     private PackageInfo info;
 
-    public static PivxApplication getInstance() {
+    public static ElectraApplication getInstance() {
         return instance;
     }
 
@@ -115,7 +115,7 @@ public class PivxApplication extends Application implements ContextWrapper {
             } catch (final IOException x) {
                 log.info("problem writing attachment", x);
             }
-            shareText(PivxApplication.this,"Pivx wallet crash", "Unexpected crash", attachments);
+            shareText(ElectraApplication.this,"Electra wallet crash", "Unexpected crash", attachments);
         }
     };
 
@@ -125,7 +125,7 @@ public class PivxApplication extends Application implements ContextWrapper {
         instance = this;
         try {
             initLogging();
-            log = LoggerFactory.getLogger(PivxApplication.class);
+            log = LoggerFactory.getLogger(ElectraApplication.class);
             PackageManager manager = getPackageManager();
             info = manager.getPackageInfo(this.getPackageName(), 0);
             activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -147,7 +147,7 @@ public class PivxApplication extends Application implements ContextWrapper {
             //walletConfiguration.saveTrustedNode(HardcodedConstants.TESTNET_HOST,0);
             //AddressStore addressStore = new SnappyStore(getDirPrivateMode("address_store").getAbsolutePath());
             ContactsStore contactsStore = new ContactsStore(this);
-            pivxModule = new PivxModuleImp(this, walletConfiguration,contactsStore,new RateDb(this),new WalletBackupHelper());
+            pivxModule = new ElectraModuleImp(this, walletConfiguration,contactsStore,new RateDb(this),new WalletBackupHelper());
             pivxModule.start();
 
         } catch (Exception e){
@@ -155,8 +155,8 @@ public class PivxApplication extends Application implements ContextWrapper {
         }
     }
 
-    public void startPivxService() {
-        Intent intent = new Intent(this,PivxWalletService.class);
+    public void startElectraService() {
+        Intent intent = new Intent(this,ElectraWalletService.class);
         startService(intent);
     }
 
@@ -207,7 +207,7 @@ public class PivxApplication extends Application implements ContextWrapper {
         log.setLevel(Level.INFO);
     }
 
-    public PivxModule getModule(){
+    public ElectraModule getModule(){
         return pivxModule;
     }
 
@@ -243,7 +243,7 @@ public class PivxApplication extends Application implements ContextWrapper {
 
     @Override
     public void stopBlockchain() {
-        Intent intent = new Intent(this,PivxWalletService.class);
+        Intent intent = new Intent(this,ElectraWalletService.class);
         intent.setAction(ACTION_RESET_BLOCKCHAIN);
         startService(intent);
     }

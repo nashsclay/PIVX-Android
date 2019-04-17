@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.pivxj.core.AddressFormatException;
-import org.pivxj.uri.PivxURI;
+import org.pivxj.uri.ElectraURI;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
@@ -157,7 +157,7 @@ public class ChangeAddressActivity extends BaseActivity {
                     if (pivxModule.chechAddress(address)){
                         usedAddress = address;
                     }else {
-                        PivxURI pivxUri = new PivxURI(address);
+                        ElectraURI pivxUri = new ElectraURI(address);
                         usedAddress = pivxUri.getAddress().toBase58();
                     }
                     edit_address.setText(usedAddress);

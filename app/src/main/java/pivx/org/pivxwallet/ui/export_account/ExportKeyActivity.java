@@ -16,7 +16,7 @@ import com.google.zxing.WriterException;
 import org.pivxj.crypto.DeterministicKey;
 
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.module.PivxContext;
+import pivx.org.pivxwallet.module.ElectraContext;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.utils.AndroidUtils;
 import pivx.org.pivxwallet.utils.CrashReporter;
@@ -60,7 +60,7 @@ public class ExportKeyActivity extends BaseActivity implements View.OnClickListe
 
     private void initValues() throws WriterException {
         DeterministicKey deterministicKey = pivxModule.getWatchingKey();
-        xpubKey = deterministicKey.serializePubB58(PivxContext.NETWORK_PARAMETERS);
+        xpubKey = deterministicKey.serializePubB58(ElectraContext.NETWORK_PARAMETERS);
         txt_title.setText(R.string.public_key);
         txt_key.setText(xpubKey);
         txt_key.setOnClickListener(this);

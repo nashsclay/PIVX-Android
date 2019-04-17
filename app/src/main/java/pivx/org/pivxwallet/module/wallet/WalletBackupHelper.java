@@ -5,8 +5,8 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-import pivx.org.pivxwallet.PivxApplication;
-import pivx.org.pivxwallet.module.PivxContext;
+import pivx.org.pivxwallet.ElectraApplication;
+import pivx.org.pivxwallet.module.ElectraContext;
 import global.utils.Iso8601Format;
 import global.BackupHelper;
 
@@ -19,16 +19,16 @@ import static com.google.common.base.Preconditions.checkState;
 public class WalletBackupHelper implements BackupHelper{
 
     public File determineBackupFile(String extraData) {
-        PivxContext.Files.EXTERNAL_WALLET_BACKUP_DIR.mkdirs();
-        checkState(PivxContext.Files.EXTERNAL_WALLET_BACKUP_DIR.isDirectory(), "%s is not a directory", PivxContext.Files.EXTERNAL_WALLET_BACKUP_DIR);
+        ElectraContext.Files.EXTERNAL_WALLET_BACKUP_DIR.mkdirs();
+        checkState(ElectraContext.Files.EXTERNAL_WALLET_BACKUP_DIR.isDirectory(), "%s is not a directory", ElectraContext.Files.EXTERNAL_WALLET_BACKUP_DIR);
 
         final DateFormat dateFormat = Iso8601Format.newDateFormat();
         dateFormat.setTimeZone(TimeZone.getDefault());
 
-        String appName = PivxApplication.getInstance().getVersionName();
+        String appName = ElectraApplication.getInstance().getVersionName();
 
         for (int i = 0; true; i++) {
-            final StringBuilder filename = new StringBuilder(PivxContext.Files.getExternalWalletBackupFileName(appName));
+            final StringBuilder filename = new StringBuilder(ElectraContext.Files.getExternalWalletBackupFileName(appName));
             filename.append('-');
             filename.append(dateFormat.format(new Date()));
             if (extraData!=null){
@@ -37,7 +37,7 @@ public class WalletBackupHelper implements BackupHelper{
             if (i > 0)
                 filename.append(" (").append(i).append(')');
 
-            final File file = new File(PivxContext.Files.EXTERNAL_WALLET_BACKUP_DIR, filename.toString());
+            final File file = new File(ElectraContext.Files.EXTERNAL_WALLET_BACKUP_DIR, filename.toString());
             if (!file.exists())
                 return file;
         }

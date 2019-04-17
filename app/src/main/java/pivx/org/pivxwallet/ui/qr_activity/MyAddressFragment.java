@@ -20,11 +20,11 @@ import android.widget.Toast;
 import com.google.zxing.WriterException;
 
 import org.pivxj.core.Address;
-import org.pivxj.uri.PivxURI;
+import org.pivxj.uri.ElectraURI;
 
-import pivx.org.pivxwallet.PivxApplication;
+import pivx.org.pivxwallet.ElectraApplication;
 import pivx.org.pivxwallet.R;
-import global.PivxModule;
+import global.ElectraModule;
 
 import static android.graphics.Color.WHITE;
 import static pivx.org.pivxwallet.utils.AndroidUtils.copyToClipboard;
@@ -36,7 +36,7 @@ import static pivx.org.pivxwallet.utils.QrUtils.encodeAsBitmap;
 
 public class MyAddressFragment extends Fragment implements View.OnClickListener {
 
-    private PivxModule module;
+    private ElectraModule module;
 
     private View root;
     private TextView txt_address;
@@ -46,7 +46,7 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
 
     private Address address;
 
-    public static MyAddressFragment newInstance(PivxModule pivxModule) {
+    public static MyAddressFragment newInstance(ElectraModule pivxModule) {
         MyAddressFragment f = new MyAddressFragment();
         f.setModule(pivxModule);
         return f;
@@ -55,7 +55,7 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        module = PivxApplication.getInstance().getModule();
+        module = ElectraApplication.getInstance().getModule();
         root = inflater.inflate(R.layout.my_address,null);
         txt_address = (TextView) root.findViewById(R.id.txt_address);
         btn_share = (Button) root.findViewById(R.id.btn_share);
@@ -80,7 +80,7 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
                 flag = true;
             }
             if (flag) {
-                String pivxUri = PivxURI.convertToBitcoinURI(address,null,"Receive address",null);
+                String pivxUri = ElectraURI.convertToBitcoinURI(address,null,"Receive address",null);
                 loadAddress(pivxUri,address.toBase58());
             }
         }catch (WriterException e){
@@ -91,7 +91,7 @@ public class MyAddressFragment extends Fragment implements View.OnClickListener 
         }
 
     }
-    public void setModule(PivxModule module) {
+    public void setModule(ElectraModule module) {
         this.module = module;
     }
 

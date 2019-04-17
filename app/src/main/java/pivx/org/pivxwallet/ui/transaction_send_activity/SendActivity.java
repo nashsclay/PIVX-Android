@@ -32,7 +32,7 @@ import org.pivxj.core.NetworkParameters;
 import org.pivxj.core.Transaction;
 import org.pivxj.core.TransactionInput;
 import org.pivxj.core.TransactionOutput;
-import org.pivxj.uri.PivxURI;
+import org.pivxj.uri.ElectraURI;
 import org.pivxj.wallet.Wallet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,8 +48,8 @@ import java.util.Set;
 import pivx.org.pivxwallet.R;
 import global.AddressLabel;
 import global.exceptions.NoPeerConnectedException;
-import global.PivxRate;
-import pivx.org.pivxwallet.service.PivxWalletService;
+import global.ElectraRate;
+import pivx.org.pivxwallet.service.ElectraWalletService;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
@@ -116,7 +116,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
     private EditText edit_memo;
     private MyFilterableAdapter filterableAdapter;
     private String addressStr;
-    private PivxRate pivxRate;
+    private ElectraRate pivxRate;
     private SimpleTextDialog errorDialog;
     private ImageButton btnSwap;
     private ViewFlipper amountSwap;
@@ -500,7 +500,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
                     if (pivxModule.chechAddress(address)){
                         usedAddress = address;
                     }else {
-                        PivxURI pivxUri = new PivxURI(address);
+                        ElectraURI pivxUri = new ElectraURI(address);
                         usedAddress = pivxUri.getAddress().toBase58();
                     }
                     final String tempPubKey = usedAddress;
@@ -855,7 +855,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             return;
         }
         pivxModule.commitTx(transaction);
-        Intent intent = new Intent(SendActivity.this, PivxWalletService.class);
+        Intent intent = new Intent(SendActivity.this, ElectraWalletService.class);
         intent.setAction(ACTION_BROADCAST_TRANSACTION);
         intent.putExtra(DATA_TRANSACTION_HASH,transaction.getHash().getBytes());
         startService(intent);

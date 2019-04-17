@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import org.pivxj.core.Coin;
-import org.pivxj.uri.PivxURI;
+import org.pivxj.uri.ElectraURI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -281,7 +281,7 @@ public class MultipleOutputsFragment extends BaseRecyclerFragment<OutputWrapper>
                     if (pivxModule.chechAddress(address)){
                         usedAddress = address;
                     }else {
-                        PivxURI pivxUri = new PivxURI(address);
+                        ElectraURI pivxUri = new ElectraURI(address);
                         usedAddress = pivxUri.getAddress().toBase58();
                     }
                     final String tempPubKey = usedAddress;

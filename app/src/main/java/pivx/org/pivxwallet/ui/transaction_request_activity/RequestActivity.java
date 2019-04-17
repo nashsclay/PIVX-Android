@@ -20,7 +20,7 @@ import com.google.zxing.WriterException;
 import org.pivxj.core.Coin;
 import org.pivxj.core.NetworkParameters;
 import org.pivxj.core.Transaction;
-import org.pivxj.uri.PivxURI;
+import org.pivxj.uri.ElectraURI;
 
 import pivx.org.pivxwallet.R;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
@@ -113,7 +113,7 @@ public class RequestActivity extends BaseActivity implements View.OnClickListene
 
         NetworkParameters params = pivxModule.getConf().getNetworkParams();
 
-        String pivxURI = PivxURI.convertToBitcoinURI(
+        String pivxURI = ElectraURI.convertToBitcoinURI(
                 params,
                 addressStr,
                 amount,

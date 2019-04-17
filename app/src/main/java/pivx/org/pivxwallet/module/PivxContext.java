@@ -14,11 +14,11 @@ import java.io.File;
  * Created by furszy on 6/4/17.
  */
 
-public class PivxContext {
+public class ElectraContext {
 
     public static final boolean IS_TEST = false;
     public static final NetworkParameters NETWORK_PARAMETERS = IS_TEST? TestNet3Params.get():MainNetParams.get();
-    /** Pivxj global context. */
+    /** Electraj global context. */
     public static final Context CONTEXT = new Context(NETWORK_PARAMETERS);
 
     public static final String DEFAULT_RATE_COIN = "USD";
@@ -26,8 +26,8 @@ public class PivxContext {
 
     public static final String ENABLE_BIP44_APP_VERSION = "1.03";
 
-    /** Pivx wallet released time */
-    public static final long PIVX_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME = 1500940800;
+    /** Electra wallet released time */
+    public static final long ECA_WALLET_APP_RELEASED_ON_PLAY_STORE_TIME = 1500940800;
 
     /** Currency exchange rate */
     public static final String URL_FIAT_CURRENCIES_RATE = "https://bitpay.com/rates";

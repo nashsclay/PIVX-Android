@@ -27,14 +27,14 @@ import pivx.org.pivxwallet.ui.donate.DonateActivity;
 import pivx.org.pivxwallet.ui.settings_activity.SettingsActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 
-import static pivx.org.pivxwallet.module.PivxContext.OUT_OF_SYNC_TIME;
+import static pivx.org.pivxwallet.module.ElectraContext.OUT_OF_SYNC_TIME;
 import static pivx.org.pivxwallet.service.IntentsConstants.ACTION_NOTIFICATION;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_BLOCKCHAIN_STATE;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_PEER_CONNECTED;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_BROADCAST_DATA_TYPE;
 import static pivx.org.pivxwallet.service.IntentsConstants.INTENT_EXTRA_BLOCKCHAIN_STATE;
 
-public class BaseDrawerActivity extends PivxActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class BaseDrawerActivity extends ElectraActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private NavigationView navigationView;
     private FrameLayout frameLayout;

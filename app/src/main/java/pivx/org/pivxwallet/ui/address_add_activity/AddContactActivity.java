@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import org.pivxj.uri.PivxURI;
+import org.pivxj.uri.ElectraURI;
 
 import pivx.org.pivxwallet.R;
 import global.AddressLabel;
@@ -145,7 +145,7 @@ public class AddContactActivity extends BaseActivity implements View.OnClickList
                     if (pivxModule.chechAddress(address)){
                         usedAddress = address;
                     }else {
-                        PivxURI pivxUri = new PivxURI(address);
+                        ElectraURI pivxUri = new ElectraURI(address);
                         usedAddress = pivxUri.getAddress().toBase58();
                     }
                     final String tempPubKey = usedAddress;

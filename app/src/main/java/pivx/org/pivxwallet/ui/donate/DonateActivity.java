@@ -13,8 +13,8 @@ import org.pivxj.core.InsufficientMoneyException;
 import org.pivxj.core.Transaction;
 
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.module.PivxContext;
-import pivx.org.pivxwallet.service.PivxWalletService;
+import pivx.org.pivxwallet.module.ElectraContext;
+import pivx.org.pivxwallet.service.ElectraWalletService;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.utils.DialogsUtil;
@@ -56,7 +56,7 @@ public class DonateActivity extends BaseDrawerActivity {
     private void send() {
         try {
             // create the tx
-            String addressStr = PivxContext.DONATE_ADDRESS;
+            String addressStr = ElectraContext.DONATE_ADDRESS;
             if (!pivxModule.chechAddress(addressStr))
                 throw new IllegalArgumentException("Address not valid");
             String amountStr = edit_amount.getText().toString();
@@ -75,7 +75,7 @@ public class DonateActivity extends BaseDrawerActivity {
             Transaction transaction = pivxModule.buildSendTx(addressStr, amount, memo,pivxModule.getReceiveAddress());
             // send it
             pivxModule.commitTx(transaction);
-            Intent intent = new Intent(DonateActivity.this, PivxWalletService.class);
+            Intent intent = new Intent(DonateActivity.this, ElectraWalletService.class);
             intent.setAction(ACTION_BROADCAST_TRANSACTION);
             intent.putExtra(DATA_TRANSACTION_HASH,transaction.getHash().getBytes());
             startService(intent);

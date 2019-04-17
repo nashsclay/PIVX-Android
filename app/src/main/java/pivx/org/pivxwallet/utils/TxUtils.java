@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Collection;
 
 import global.AddressLabel;
-import global.PivxModule;
+import global.ElectraModule;
 import global.wrappers.TransactionWrapper;
 
 /**
@@ -18,7 +18,7 @@ public class TxUtils {
 
     private static Logger logger = LoggerFactory.getLogger(TxUtils.class);
 
-    public static String getAddressOrContact(PivxModule pivxModule, TransactionWrapper data) {
+    public static String getAddressOrContact(ElectraModule pivxModule, TransactionWrapper data) {
         String text;
         if (data.getOutputLabels()!=null && !data.getOutputLabels().isEmpty()){
             Collection<AddressLabel> addressLabels = data.getOutputLabels().values();

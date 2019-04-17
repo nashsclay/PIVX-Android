@@ -21,7 +21,7 @@ import com.github.clans.fab.FloatingActionMenu;
 
 import org.pivxj.core.Coin;
 import org.pivxj.core.Transaction;
-import org.pivxj.uri.PivxURI;
+import org.pivxj.uri.ElectraURI;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ import java.util.List;
 import chain.BlockchainState;
 import pivx.org.pivxwallet.R;
 import global.exceptions.NoPeerConnectedException;
-import global.PivxRate;
+import global.ElectraRate;
 import pivx.org.pivxwallet.ui.base.BaseDrawerActivity;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTextDialog;
 import pivx.org.pivxwallet.ui.base.dialogs.SimpleTwoButtonsDialog;
@@ -69,7 +69,7 @@ public class WalletActivity extends BaseDrawerActivity {
     private TextView txt_watch_only;
     private View view_background;
     private View container_syncing;
-    private PivxRate pivxRate;
+    private ElectraRate pivxRate;
     private TransactionsFragmentBase txsFragment;
 
     // Receiver
@@ -197,7 +197,7 @@ public class WalletActivity extends BaseDrawerActivity {
 
     private void init() {
         // Start service if it's not started.
-        pivxApplication.startPivxService();
+        pivxApplication.startElectraService();
 
         if (!pivxApplication.getAppConf().hasBackup()){
             long now = System.currentTimeMillis();
@@ -268,19 +268,19 @@ public class WalletActivity extends BaseDrawerActivity {
 
         List<TransactionData> data = new ArrayList<>();
 
-        data.add(new TransactionData("Sent Pivx", "18:23", R.mipmap.ic_transaction_receive,"56.32", "701 USD" ));
-        data.add(new TransactionData("Sent Pivx", "1 days ago", R.mipmap.ic_transaction_send,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent Pivx", "2 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent Pivx", "2 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent Pivx", "3 days ago", R.mipmap.ic_transaction_send,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent Pivx", "3 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent Electra", "18:23", R.mipmap.ic_transaction_receive,"56.32", "701 USD" ));
+        data.add(new TransactionData("Sent Electra", "1 days ago", R.mipmap.ic_transaction_send,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent Electra", "2 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent Electra", "2 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent Electra", "3 days ago", R.mipmap.ic_transaction_send,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent Electra", "3 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
 
-        data.add(new TransactionData("Sent Pivx", "4 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent Pivx", "4 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent Pivx", "one week ago", R.mipmap.ic_transaction_send,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent Pivx", "one week ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent Pivx", "one week ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
-        data.add(new TransactionData("Sent Pivx", "one week ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD" ));
+        data.add(new TransactionData("Sent Electra", "4 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent Electra", "4 days ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent Electra", "one week ago", R.mipmap.ic_transaction_send,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent Electra", "one week ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent Electra", "one week ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD"));
+        data.add(new TransactionData("Sent Electra", "one week ago", R.mipmap.ic_transaction_receive,"56.32", "701 USD" ));
 
         return data;
     }
@@ -295,7 +295,7 @@ public class WalletActivity extends BaseDrawerActivity {
                     if (pivxModule.chechAddress(address)){
                         usedAddress = address;
                     }else {
-                        PivxURI pivxUri = new PivxURI(address);
+                        ElectraURI pivxUri = new ElectraURI(address);
                         usedAddress = pivxUri.getAddress().toBase58();
                         final Coin amount = pivxUri.getAmount();
                         if (amount != null){

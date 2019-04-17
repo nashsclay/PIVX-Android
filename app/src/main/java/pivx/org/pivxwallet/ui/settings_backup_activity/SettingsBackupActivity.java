@@ -20,7 +20,7 @@ import java.io.File;
 import java.io.IOException;
 
 import pivx.org.pivxwallet.R;
-import pivx.org.pivxwallet.module.PivxContext;
+import pivx.org.pivxwallet.module.ElectraContext;
 import pivx.org.pivxwallet.module.wallet.WalletBackupHelper;
 import pivx.org.pivxwallet.ui.backup_mnemonic_activity.MnemonicActivity;
 import pivx.org.pivxwallet.ui.base.BaseActivity;
@@ -66,7 +66,7 @@ public class SettingsBackupActivity extends BaseActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                org.pivxj.core.Context.propagate(PivxContext.CONTEXT);
+                org.pivxj.core.Context.propagate(ElectraContext.CONTEXT);
                 backup();
                 runOnUiThread(new Runnable() {
                     @Override

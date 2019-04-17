@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import pivx.org.pivxwallet.PivxApplication;
+import pivx.org.pivxwallet.ElectraApplication;
 import pivx.org.pivxwallet.ui.splash_activity.SplashActivity;
 import pivx.org.pivxwallet.ui.wallet_activity.WalletActivity;
 import pivx.org.pivxwallet.utils.AppConf;
@@ -19,7 +19,7 @@ public class InitialActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PivxApplication pivxApplication = PivxApplication.getInstance();
+        ElectraApplication pivxApplication = ElectraApplication.getInstance();
         AppConf appConf = pivxApplication.getAppConf();
         // show report dialog if something happen with the previous process
         Intent intent;

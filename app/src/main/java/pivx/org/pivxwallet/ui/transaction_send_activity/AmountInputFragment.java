@@ -18,7 +18,7 @@ import org.pivxj.core.Coin;
 import java.math.BigDecimal;
 
 import pivx.org.pivxwallet.R;
-import global.PivxRate;
+import global.ElectraRate;
 import pivx.org.pivxwallet.ui.base.BaseFragment;
 
 /**
@@ -33,7 +33,7 @@ public class AmountInputFragment extends BaseFragment implements View.OnClickLis
     private TextView txt_currency_amount, txtShowPiv,txt_local_currency;
     private ImageButton btnSwap;
     private ViewFlipper amountSwap;
-    private PivxRate pivxRate;
+    private ElectraRate pivxRate;
     private boolean inPivs = true;
 
     @Nullable
